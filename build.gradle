@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+compileJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Mobile Automation (Appium)
+    implementation 'io.appium:java-client:9.2.2'
+    implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+
+    // Web Automation (Selenium WebDriver latest)
+    implementation 'org.seleniumhq.selenium:selenium-java:4.20.0'
+
+    // BDD (Cucumber JVM)
+    testImplementation 'io.cucumber:cucumber-java:7.17.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.17.0'
+    testImplementation 'io.cucumber:cucumber-java8:7.17.0'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.17.0'
+
+    // JUnit 5 & Vintage (for compatibility)
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.10.2'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    testLogging.showStandardStreams = true
+}
+
+tasks {
+    clean {
+        delete "${rootDir}/build"
+        delete "${rootDir}/target"
+    }
+}
